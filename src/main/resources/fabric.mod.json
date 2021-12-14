@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "earlytobed",
+  "version": "${version}",
+
+  "name": "EarlyToBed Mod",
+  "description": "A few items to make very early game a bit easier to play.",
+  "authors": [
+    "Pintér Gábor <pinter.gabor@gmx.at>"
+  ],
+  "contact": {
+    "homepage": "https://pintergabor.eu/en/minecraft/mods/earlytobed/",
+    "sources": "https://gitlab.com/pintergabor/earlytobed"
+  },
+
+  "license": "MIT",
+  "icon": "assets/earlytobed/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "eu.pintergabor.earlytobed.EarlyToBed"
+    ]
+  },
+  "mixins": [
+    "earlytobed.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.11",
+    "fabric": "*",
+    "minecraft": "1.18.1"
+  }
+}
