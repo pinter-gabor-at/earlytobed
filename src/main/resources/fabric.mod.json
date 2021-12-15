@@ -22,7 +22,7 @@
     ]
   },
   "mixins": [
-    "EarlyToBed.mixins.json"
+    "earlytobed.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.12.11",

@@ -4,8 +4,11 @@
   "package": "eu.pintergabor.earlytobed.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "WoodenShearsMixin"
   ],
   "client": [
+  ],
+  "server": [
   ],
   "injectors": {
     "defaultRequire": 1

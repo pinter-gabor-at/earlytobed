@@ -15,6 +15,12 @@ public class Items {
     // A wooden bucket, filled with water
     public static WoodenBucketItem WOODEN_WATER_BUCKET_ITEM =
             new WoodenBucketItem(Fluids.WATER, new FabricItemSettings().group(ItemGroup.MISC));
+    // A wooden shears
+    public static final WoodenShearsItem WOODEN_SHEARS_ITEM =
+            new WoodenShearsItem(new FabricItemSettings().group(ItemGroup.MISC).maxDamage(5));
+    // A wooden saddle
+    public static final WoodenSaddleItem WOODEN_SADDLE_ITEM =
+            new WoodenSaddleItem(new FabricItemSettings().group(ItemGroup.MISC));
 
     public static void Register() {
         // Create and register wooden buckets
@@ -22,6 +28,10 @@ public class Items {
                 new Identifier(MODID, "wooden_bucket"), WOODEN_BUCKET_ITEM);
         Registry.register(Registry.ITEM,
                 new Identifier(MODID, "wooden_water_bucket"), WOODEN_WATER_BUCKET_ITEM);
+        Registry.register(Registry.ITEM,
+                new Identifier(MODID, "wooden_shears"), WOODEN_SHEARS_ITEM);
+        Registry.register(Registry.ITEM,
+                new Identifier(MODID, "wooden_saddle"), WOODEN_SADDLE_ITEM);
     }
 
 }
