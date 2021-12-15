@@ -3,7 +3,7 @@ package eu.pintergabor.earlytobed;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Global {
+public final class Global {
     private Global() {
         // Static class
     }
@@ -13,5 +13,4 @@ public class Global {
 
     // This logger is used to write text to the console and the log file.
     public static final Logger LOGGER = LogManager.getLogger(MODID);
-
 }

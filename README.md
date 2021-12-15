@@ -10,15 +10,8 @@ So I made this mod to allow a less violent start.
 Create a wooden shear.
 It has a pitifully low durability, barely enough to collect 3 wools for your first bed.
 
-Other items to help you at the very beginning of a new game:
-
-* Wooden bucket
-
-	Similar to normal bucket, but made of wood and can hold only water.
-
-* Wooden saddle
-
-	Similar to regular saddle, but it breaks apart when you take it off your horse.
+There is one more item to help you at the very beginning of a new game:  the wooden bucket.
+It isimilar to a normal bucket, but made of wood, and can hold only water, and does not interact with cauldrons.
 
 ## License
 

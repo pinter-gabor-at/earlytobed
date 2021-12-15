@@ -4,7 +4,7 @@ import net.fabricmc.api.ModInitializer;
 
 import static eu.pintergabor.earlytobed.Global.*;
 
-public class EarlyToBed implements ModInitializer {
+public final class EarlyToBed implements ModInitializer {
 
     @Override
     public void onInitialize() {
