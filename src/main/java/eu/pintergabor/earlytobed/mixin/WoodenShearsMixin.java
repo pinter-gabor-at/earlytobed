@@ -27,7 +27,7 @@ public class WoodenShearsMixin {
         SheepEntity that = (SheepEntity)(Object)this;
         ItemStack itemStack = player2.getStackInHand(hand);
         if (itemStack.isOf(WOODEN_SHEARS_ITEM)) {
-            if (!that.world.isClient && that.isShearable()) {
+            if (!that.getWorld().isClient && that.isShearable()) {
                 that.sheared(SoundCategory.PLAYERS);
                 that.emitGameEvent(GameEvent.SHEAR, player2);
                 itemStack.damage(1, player2, player -> player.sendToolBreakStatus(hand));
