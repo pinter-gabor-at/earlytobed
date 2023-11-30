@@ -10,6 +10,8 @@ So I made this mod to allow a less violent start.
 I have created a wooden shear.
 It has pitifully low durability, barely enough to collect 3 wools for your first bed.
 
+![Screenshot](./images/screenshot2.png "Screenshot")
+
 There is one more item to help you at the very beginning of a new game: the wooden bucket.
 It is similar to a normal bucket, but made of wood, can hold only water, and does not interact with cauldrons.
 
@@ -19,7 +21,7 @@ Standard MIT license. Feel free to learn from it and incorporate it in your own 
 
 ## Source code
 
-https://gitlab.com/pintergabor/earlytobed.git
+Available on [GitLab](https://gitlab.com/pintergabor/earlytobed.git) or on [GitHub](https://github.com/pinter-gabor-at/earlytobed.git).
 
 ## For developers
 

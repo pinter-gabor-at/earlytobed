@@ -19,18 +19,18 @@ import static eu.pintergabor.earlytobed.item.ModItems.WOODEN_SHEARS_ITEM;
  * The code is identical to the original one, but checks for WOODEN_SHEARS_ITEM instead of SHEARS
  */
 @Mixin(SheepEntity.class)
-public class WoodenShearsMixin {
+public abstract class WoodenShearsMixin {
     @Inject(at = @At("HEAD"),
             method = "interactMob(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;",
             cancellable = true)
-    private void interactMob(PlayerEntity player2, Hand hand, CallbackInfoReturnable<ActionResult> ret) {
+    private void interactMob(PlayerEntity player1, Hand hand, CallbackInfoReturnable<ActionResult> ret) {
         SheepEntity that = (SheepEntity)(Object)this;
-        ItemStack itemStack = player2.getStackInHand(hand);
+        ItemStack itemStack = player1.getStackInHand(hand);
         if (itemStack.isOf(WOODEN_SHEARS_ITEM)) {
             if (!that.getWorld().isClient && that.isShearable()) {
                 that.sheared(SoundCategory.PLAYERS);
-                that.emitGameEvent(GameEvent.SHEAR, player2);
-                itemStack.damage(1, player2, player -> player.sendToolBreakStatus(hand));
+                that.emitGameEvent(GameEvent.SHEAR, player1);
+                itemStack.damage(1, player1, player -> player.sendToolBreakStatus(hand));
                 ret.setReturnValue(ActionResult.SUCCESS);
                 return;
             }
