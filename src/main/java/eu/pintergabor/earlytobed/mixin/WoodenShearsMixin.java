@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static eu.pintergabor.earlytobed.Items.WOODEN_SHEARS_ITEM;
+import static eu.pintergabor.earlytobed.ModItems.WOODEN_SHEARS_ITEM;
 
 /**
  * Inject code into SheepEntity#interactMob

@@ -13,6 +13,6 @@ public final class EarlyToBed implements ModInitializer {
         // Proceed with mild caution.
         LOGGER.info("EarlyToBed started.");
         // Register items
-        Items.Register();
+        ModItems.Register();
     }
 }

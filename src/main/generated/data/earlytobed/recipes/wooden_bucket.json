@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "   ",
-    "W W",
-    " W "
-  ],
+  "category": "equipment",
   "key": {
     "W": {
       "tag": "minecraft:logs"
     }
   },
+  "pattern": [
+    "   ",
+    "W W",
+    " W "
+  ],
   "result": {
     "item": "earlytobed:wooden_bucket"
-  }
+  },
+  "show_notification": true
 }

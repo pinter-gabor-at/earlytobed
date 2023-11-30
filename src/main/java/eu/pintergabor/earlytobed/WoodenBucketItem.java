@@ -63,7 +63,7 @@ public final class WoodenBucketItem
                             // Normally it returns a WATER_BUCKET_ITEM
                             if (!itemStack2.isEmpty()) {
                                 // Change it to WOODEN_WATER_BUCKET_ITEM
-                                itemStack2 = new ItemStack(Items.WOODEN_WATER_BUCKET_ITEM);
+                                itemStack2 = new ItemStack(ModItems.WOODEN_WATER_BUCKET_ITEM);
                                 user.incrementStat(Stats.USED.getOrCreateStat(this));
                                 fluidDrainable.getBucketFillSound().ifPresent((sound) -> {
                                     user.playSound(sound, 1.0F, 1.0F);
@@ -100,7 +100,7 @@ public final class WoodenBucketItem
 
     public static ItemStack getEmptiedStack(ItemStack stack, PlayerEntity player) {
         if (!player.getAbilities().creativeMode) {
-            return new ItemStack(Items.WOODEN_BUCKET_ITEM);
+            return new ItemStack(ModItems.WOODEN_BUCKET_ITEM);
         }
         return stack;
     }

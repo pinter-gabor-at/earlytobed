@@ -8,8 +8,8 @@ import net.minecraft.util.Identifier;
 
 import static eu.pintergabor.earlytobed.Constants.*;
 
-public final class Items {
-    private Items() {
+public final class ModItems {
+    private ModItems() {
         // Static class
     }
 
