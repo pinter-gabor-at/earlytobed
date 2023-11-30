@@ -1,4 +1,4 @@
-package eu.pintergabor.earlytobed;
+package eu.pintergabor.earlytobed.item;
 
 import net.minecraft.item.*;
 

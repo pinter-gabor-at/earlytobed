@@ -1,6 +1,6 @@
 # Minecraft Fabric Early to Bed Mod
 
-"Early to bed and early to rise makes a man healthy, wealthy, and wise"
+"Early to bed, early to rise, makes a man healthy, wealthy, and wise"
 
 But when starting a new game in Minecraft you cannot go early to bed.
 First you must kill three sheep with your bare hands or with a wooden sword.

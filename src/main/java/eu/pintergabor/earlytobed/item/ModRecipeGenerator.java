@@ -1,4 +1,4 @@
-package eu.pintergabor.earlytobed;
+package eu.pintergabor.earlytobed.item;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;

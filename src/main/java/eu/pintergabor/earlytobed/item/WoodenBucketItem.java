@@ -1,4 +1,4 @@
-package eu.pintergabor.earlytobed;
+package eu.pintergabor.earlytobed.item;
 
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
@@ -65,9 +65,8 @@ public final class WoodenBucketItem
                                 // Change it to WOODEN_WATER_BUCKET_ITEM
                                 itemStack2 = new ItemStack(ModItems.WOODEN_WATER_BUCKET_ITEM);
                                 user.incrementStat(Stats.USED.getOrCreateStat(this));
-                                fluidDrainable.getBucketFillSound().ifPresent((sound) -> {
-                                    user.playSound(sound, 1.0F, 1.0F);
-                                });
+                                fluidDrainable.getBucketFillSound().ifPresent(
+                                        (sound) -> user.playSound(sound, 1.0F, 1.0F));
                                 world.emitGameEvent(user, GameEvent.FLUID_PICKUP, blockHitPos);
                                 ItemStack itemStack3 = ItemUsage.exchangeStack(itemStack, user, itemStack2);
                                 if (!world.isClient) {

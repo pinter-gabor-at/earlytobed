@@ -1,4 +1,4 @@
-package eu.pintergabor.earlytobed;
+package eu.pintergabor.earlytobed.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.fluid.Fluids;
