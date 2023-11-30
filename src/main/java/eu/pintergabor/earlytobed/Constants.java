@@ -3,8 +3,8 @@ package eu.pintergabor.earlytobed;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public final class Global {
-    private Global() {
+public final class Constants {
+    private Constants() {
         // Static class
     }
 

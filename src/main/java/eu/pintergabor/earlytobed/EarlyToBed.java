@@ -2,7 +2,7 @@ package eu.pintergabor.earlytobed;
 
 import net.fabricmc.api.ModInitializer;
 
-import static eu.pintergabor.earlytobed.Global.*;
+import static eu.pintergabor.earlytobed.Constants.*;
 
 public final class EarlyToBed implements ModInitializer {
 

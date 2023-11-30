@@ -6,7 +6,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
-import static eu.pintergabor.earlytobed.Global.*;
+import static eu.pintergabor.earlytobed.Constants.*;
 
 public final class Items {
     private Items() {
@@ -29,6 +29,7 @@ public final class Items {
                 new Identifier(MODID, "wooden_bucket"), WOODEN_BUCKET_ITEM);
         Registry.register(Registries.ITEM,
                 new Identifier(MODID, "wooden_water_bucket"), WOODEN_WATER_BUCKET_ITEM);
+        // Create and register wooden shears
         Registry.register(Registries.ITEM,
                 new Identifier(MODID, "wooden_shears"), WOODEN_SHEARS_ITEM);
     }
