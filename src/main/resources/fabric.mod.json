@@ -3,23 +3,23 @@
 	"id": "earlytobed",
 	"version": "${version}",
 	"name": "EarlyToBed",
-	"description": "This is an example description! Tell everyone what your mod is about!",
-	"authors": [
-		"Me!"
-	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "CC0-1.0",
-	"icon": "assets/earlytobed/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"eu.pintergabor.earlytobed.EarlyToBed"
+  "description": "A few items to make very early game a bit easier to play.",
+  "authors": [
+    "Pintér Gábor <pinter.gabor@gmx.at>"
+  ],
+  "contact": {
+    "homepage": "https://pintergabor.eu/en/minecraft/mods/earlytobed/",
+    "sources": "https://gitlab.com/pintergabor/earlytobed"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+		"eu.pintergabor.earlytobed.Mod"
 		],
 		"fabric-datagen": [
-			"eu.pintergabor.earlytobed.EarlyToBedDataGenerator"
+			"eu.pintergabor.earlytobed.Datagen"
 		]
 	},
 	"mixins": [
@@ -30,8 +30,5 @@
 		"minecraft": "~1.20.2",
 		"java": ">=17",
 		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }

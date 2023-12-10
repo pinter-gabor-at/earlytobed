@@ -3,9 +3,9 @@ package eu.pintergabor.earlytobed;
 import eu.pintergabor.earlytobed.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
-import static eu.pintergabor.earlytobed.Constants.*;
+import static eu.pintergabor.earlytobed.Global.*;
 
-public final class EarlyToBed implements ModInitializer {
+public final class Mod implements ModInitializer {
 
     @Override
     public void onInitialize() {
