@@ -6,6 +6,8 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemGroups;
 
+import static eu.pintergabor.earlytobed.util.Register.registerItem;
+
 public final class ModItems {
     private ModItems() {
         // Static class
@@ -23,12 +25,12 @@ public final class ModItems {
 
     public static void Register() {
         // Create and register wooden buckets
-        Register.registerItem(
+        registerItem(
                 "wooden_bucket", WOODEN_BUCKET_ITEM);
-        Register.registerItem(
+        registerItem(
                 "wooden_water_bucket", WOODEN_WATER_BUCKET_ITEM);
         // Create and register wooden shears
-        Register.registerItem(
+        registerItem(
                 "wooden_shears", WOODEN_SHEARS_ITEM);
         // Item groups
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(
