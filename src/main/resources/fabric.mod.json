@@ -1,8 +1,8 @@
 {
-	"schemaVersion": 1,
-	"id": "earlytobed",
-	"version": "${version}",
-	"name": "EarlyToBed",
+  "schemaVersion": 1,
+  "id": "earlytobed",
+  "version": "${version}",
+  "name": "EarlyToBed",
   "description": "A few items to make very early game a bit easier to play.",
   "authors": [
     "Pintér Gábor <pinter.gabor@gmx.at>"
@@ -16,19 +16,19 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-		"eu.pintergabor.earlytobed.Mod"
-		],
-		"fabric-datagen": [
-			"eu.pintergabor.earlytobed.Datagen"
-		]
-	},
-	"mixins": [
-		"earlytobed.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.15",
-		"minecraft": "~1.20.3",
-		"java": ">=17",
-		"fabric-api": "*"
-	}
+      "eu.pintergabor.earlytobed.Mod"
+    ],
+    "fabric-datagen": [
+      "eu.pintergabor.earlytobed.Datagen"
+    ]
+  },
+  "mixins": [
+    "eu.pintergabor.earlytobed.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15",
+    "minecraft": "~1.20.3",
+    "java": ">=17",
+    "fabric-api": "*"
+  }
 }

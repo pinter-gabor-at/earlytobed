@@ -5,9 +5,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 
 public final class Register {
-	private Register() {
-		// Static class
-	}
 
 	/**
 	 * Register mod item

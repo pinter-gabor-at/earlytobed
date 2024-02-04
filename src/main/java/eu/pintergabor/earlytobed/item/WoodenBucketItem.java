@@ -25,11 +25,11 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
-public final class WoodenBucketItem
+public class WoodenBucketItem
 	extends BucketItem {
 
 	// We must duplicate it, because it is private in BucketItem.
-	private final Fluid fluid;
+	protected final Fluid fluid;
 
 	/**
 	 * Create a wooden bucket
@@ -40,65 +40,90 @@ public final class WoodenBucketItem
 		this.fluid = fluid;
 	}
 
+	/**
+	 * Fill empty bucket, if possible
+	 * @param world World
+	 * @param user Player
+	 * @param itemStack ItemStack in Player's hand (=one empty wooden bucket)
+	 * @param blockHitResult Block hit by player
+	 * @return The usual {@link TypedActionResult} of {@link #use(World, PlayerEntity, Hand)}
+	 */
+	protected TypedActionResult<ItemStack> fillEmptyBucket(
+		World world, PlayerEntity user, ItemStack itemStack, BlockHitResult blockHitResult) {
+		BlockPos blockHitPos = blockHitResult.getBlockPos();
+		BlockState blockState = world.getBlockState(blockHitPos);
+		Block block = blockState.getBlock();
+		if (world.canPlayerModifyAt(user, blockHitPos) && (block == Blocks.WATER)) {
+			// Try to empty it
+			FluidDrainable fluidDrainable = (FluidDrainable) block;
+			ItemStack emptiedStack = fluidDrainable.tryDrainFluid(user, world, blockHitPos, blockState);
+			// Normally it returns a WATER_BUCKET_ITEM
+			if (!emptiedStack.isEmpty()) {
+				// Change it to WOODEN_WATER_BUCKET_ITEM
+				emptiedStack = new ItemStack(ModItems.WOODEN_WATER_BUCKET_ITEM);
+				user.incrementStat(Stats.USED.getOrCreateStat(this));
+				fluidDrainable.getBucketFillSound().ifPresent(
+					(sound) -> user.playSound(sound, 1f, 1f));
+				world.emitGameEvent(user, GameEvent.FLUID_PICKUP, blockHitPos);
+				ItemStack itemStack3 = ItemUsage.exchangeStack(itemStack, user, emptiedStack);
+				if (!world.isClient) {
+					Criteria.FILLED_BUCKET.trigger((ServerPlayerEntity) user, emptiedStack);
+				}
+				return TypedActionResult.success(itemStack3, world.isClient());
+			}
+		}
+		return TypedActionResult.fail(itemStack);
+	}
+
+	/**
+	 * Empty bucket, if possible
+	 * @param world World
+	 * @param user Player
+	 * @param itemStack ItemStack in Player's hand (=one wooden bucket filled with water)
+	 * @param blockHitResult Block hit by player
+	 * @return The usual {@link TypedActionResult} of {@link #use(World, PlayerEntity, Hand)}
+	 */
+	protected TypedActionResult<ItemStack> emptyBucket(
+		World world, PlayerEntity user, ItemStack itemStack, BlockHitResult blockHitResult) {
+		BlockPos blockHitPos = blockHitResult.getBlockPos();
+		Direction direction = blockHitResult.getSide();
+		BlockPos blockNextPos = blockHitPos.offset(direction);
+		BlockState blockState = world.getBlockState(blockHitPos);
+		BlockPos targetPos = (blockState.getBlock() instanceof FluidFillable) ? blockHitPos : blockNextPos;
+		if (user.canPlaceOn(blockNextPos, direction, itemStack) &&
+			placeFluid(user, world, targetPos, blockHitResult)) {
+			onEmptied(user, world, itemStack, targetPos);
+			if (user instanceof ServerPlayerEntity) {
+				Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) user, targetPos, itemStack);
+			}
+			user.incrementStat(Stats.USED.getOrCreateStat(this));
+			return TypedActionResult.success(getEmptiedStack(itemStack, user), world.isClient());
+		}
+		return TypedActionResult.fail(itemStack);
+	}
+
+	/**
+	 * Use wooden bucket on a block
+	 * @param world World
+	 * @param user Player
+	 * @param hand Active hand
+	 * @return The usual {@link TypedActionResult} values
+	 */
 	@Override
-	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+	public TypedActionResult<ItemStack> use(
+		World world, PlayerEntity user, Hand hand) {
 		ItemStack itemStack = user.getStackInHand(hand);
 		BlockHitResult blockHitResult = net.minecraft.item.BucketItem.raycast(world, user,
-			this.fluid == Fluids.EMPTY ? RaycastContext.FluidHandling.SOURCE_ONLY : RaycastContext.FluidHandling.NONE);
+			fluid == Fluids.EMPTY ?
+				RaycastContext.FluidHandling.SOURCE_ONLY : RaycastContext.FluidHandling.NONE);
 		if (blockHitResult.getType() == HitResult.Type.MISS) {
 			return TypedActionResult.pass(itemStack);
 		} else if (blockHitResult.getType() != HitResult.Type.BLOCK) {
 			return TypedActionResult.pass(itemStack);
-		} else {
-			BlockPos blockHitPos = blockHitResult.getBlockPos();
-			Direction direction = blockHitResult.getSide();
-			BlockPos blockNextPos = blockHitPos.offset(direction);
-			if (world.canPlayerModifyAt(user, blockHitPos) && user.canPlaceOn(blockNextPos, direction, itemStack)) {
-				BlockState blockState = world.getBlockState(blockHitPos);
-				if (this.fluid == Fluids.EMPTY) {
-					// Fill empty bucket, if possible
-					Block block = blockState.getBlock();
-					if (block instanceof FluidDrainable) {
-						// Is it a water block?
-						if (block == Blocks.WATER) {
-							// Try to empty it
-							FluidDrainable fluidDrainable = (FluidDrainable) block;
-							ItemStack itemStack2 = fluidDrainable.tryDrainFluid(user, world, blockHitPos, blockState);
-							// Normally it returns a WATER_BUCKET_ITEM
-							if (!itemStack2.isEmpty()) {
-								// Change it to WOODEN_WATER_BUCKET_ITEM
-								itemStack2 = new ItemStack(ModItems.WOODEN_WATER_BUCKET_ITEM);
-								user.incrementStat(Stats.USED.getOrCreateStat(this));
-								fluidDrainable.getBucketFillSound().ifPresent(
-									(sound) -> user.playSound(sound, 1.0F, 1.0F));
-								world.emitGameEvent(user, GameEvent.FLUID_PICKUP, blockHitPos);
-								ItemStack itemStack3 = ItemUsage.exchangeStack(itemStack, user, itemStack2);
-								if (!world.isClient) {
-									Criteria.FILLED_BUCKET.trigger((ServerPlayerEntity) user, itemStack2);
-								}
-								return TypedActionResult.success(itemStack3, world.isClient());
-							}
-						}
-					}
-					return TypedActionResult.fail(itemStack);
-				} else {
-					// Empty full bucket, if possible
-					BlockPos targetPos = (blockState.getBlock() instanceof FluidFillable) ? blockHitPos : blockNextPos;
-					if (this.placeFluid(user, world, targetPos, blockHitResult)) {
-						this.onEmptied(user, world, itemStack, targetPos);
-						if (user instanceof ServerPlayerEntity) {
-							Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) user, targetPos, itemStack);
-						}
-						user.incrementStat(Stats.USED.getOrCreateStat(this));
-						return TypedActionResult.success(getEmptiedStack(itemStack, user), world.isClient());
-					} else {
-						return TypedActionResult.fail(itemStack);
-					}
-				}
-			} else {
-				return TypedActionResult.fail(itemStack);
-			}
+		} else if (fluid == Fluids.EMPTY) {
+			return fillEmptyBucket(world, user, itemStack, blockHitResult);
 		}
+		return emptyBucket(world, user, itemStack, blockHitResult);
 	}
 
 	public static ItemStack getEmptiedStack(ItemStack stack, PlayerEntity player) {

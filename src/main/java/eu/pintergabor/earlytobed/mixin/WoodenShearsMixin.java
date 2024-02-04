@@ -24,7 +24,7 @@ public abstract class WoodenShearsMixin {
 	@Inject(at = @At("HEAD"),
 		method = "interactMob(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;",
 		cancellable = true)
-	private void interactMob(PlayerEntity player1, Hand hand, CallbackInfoReturnable<ActionResult> ret) {
+	private void interactMob(PlayerEntity player1, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
 		SheepEntity that = (SheepEntity) (Object) this;
 		ItemStack itemStack = player1.getStackInHand(hand);
 		if (itemStack.isOf(WOODEN_SHEARS_ITEM)) {
@@ -32,10 +32,10 @@ public abstract class WoodenShearsMixin {
 				that.sheared(SoundCategory.PLAYERS);
 				that.emitGameEvent(GameEvent.SHEAR, player1);
 				itemStack.damage(1, player1, player -> player.sendToolBreakStatus(hand));
-				ret.setReturnValue(ActionResult.SUCCESS);
-				return;
+				cir.setReturnValue(ActionResult.SUCCESS);
+			} else {
+				cir.setReturnValue(ActionResult.CONSUME);
 			}
-			ret.setReturnValue(ActionResult.CONSUME);
 		}
 	}
 }

@@ -9,10 +9,6 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
 public final class ModItems {
-	private ModItems() {
-		// Static class
-	}
-
 	// A wooden bucket
 	public static final WoodenBucketItem WOODEN_BUCKET_ITEM =
 		new WoodenBucketItem(Fluids.EMPTY, new FabricItemSettings());
