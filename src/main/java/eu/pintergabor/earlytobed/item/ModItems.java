@@ -8,6 +8,8 @@ import net.minecraft.item.ItemGroups;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
+import net.minecraft.item.ShearsItem;
+
 public final class ModItems {
 	// A wooden bucket
 	public static final WoodenBucketItem WOODEN_BUCKET_ITEM =
@@ -16,8 +18,8 @@ public final class ModItems {
 	public static final WoodenBucketItem WOODEN_WATER_BUCKET_ITEM =
 		new WoodenBucketItem(Fluids.WATER, new FabricItemSettings());
 	// A wooden shears
-	public static final WoodenShearsItem WOODEN_SHEARS_ITEM =
-		new WoodenShearsItem(new FabricItemSettings().maxDamage(3));
+	public static final ShearsItem WOODEN_SHEARS_ITEM =
+		new ShearsItem(new FabricItemSettings().maxDamage(3));
 
 	public static void Register() {
 		// Create and register wooden buckets
