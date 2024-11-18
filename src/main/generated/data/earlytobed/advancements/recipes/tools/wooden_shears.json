@@ -28,6 +28,5 @@
     "recipes": [
       "minecraft:wooden_shears"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
