@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:wooden_bucket"
+        "recipe": "earlytobed:wooden_shears"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:wooden_bucket"
+      "earlytobed:wooden_shears"
     ]
   }
 }
