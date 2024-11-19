@@ -3,6 +3,7 @@ package eu.pintergabor.earlytobed.mixin;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -29,7 +30,7 @@ public abstract class WoodenShearsMixin {
         ItemStack itemStack = player.getStackInHand(hand);
         if (itemStack.isOf(WOODEN_SHEARS_ITEM)) {
             if (!that.getWorld().isClient && that.isShearable()) {
-                that.sheared(SoundCategory.PLAYERS);
+                that.sheared((ServerWorld)that.getWorld(), SoundCategory.PLAYERS, itemStack);
                 that.emitGameEvent(GameEvent.SHEAR, player);
                 itemStack.damage(1, player, getSlotForHand(hand));
                 cir.setReturnValue(ActionResult.SUCCESS);
