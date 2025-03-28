@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "earlytobed",
+  "id": "${mod_id}",
   "version": "${version}",
   "name": "EarlyToBed",
   "description": "A few items to make very early game a bit easier to play.",
@@ -26,9 +26,9 @@
     "eu.pintergabor.earlytobed.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.9",
-    "minecraft": "~1.21.4",
     "java": ">=21",
-    "fabric-api": "*"
+    "minecraft": "${minecraft_version}",
+    "fabricloader": "${loader_version}",
+    "fabric-api": "${fabric_version}"
   }
 }
