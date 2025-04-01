@@ -28,30 +28,29 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 
-public class WoodenBucketItem
-	extends BucketItem {
+public class WoodenBucketItem extends BucketItem {
 
 	// It must be duplicated, because it is private in BucketItem.
 	protected final Fluid fluid;
 
 	/**
-	 * Create a wooden bucket
+	 * Create a wooden bucket.
 	 *
-	 * @param fluid Fluids#EMPTY or Fluids#WATER
+	 * @param fluid {@link Fluids#EMPTY} or {@link Fluids#WATER}.
 	 */
-	public WoodenBucketItem(Fluid fluid, Item.Properties settings) {
-		super(fluid, settings);
+	public WoodenBucketItem(Fluid fluid, Item.Properties properties) {
+		super(fluid, properties);
 		this.fluid = fluid;
 	}
 
 	/**
-	 * Fill empty bucket, if possible
+	 * Fill empty bucket, if possible.
 	 *
-	 * @param level          Level
-	 * @param user           Player
-	 * @param itemStack      ItemStack in Player's hand (=one empty wooden bucket)
-	 * @param blockHitResult Block hit by player
-	 * @return The usual {@link InteractionResult} of {@link #use(Level, Player, InteractionHand)}
+	 * @param level          Level.
+	 * @param user           Player.
+	 * @param itemStack      ItemStack in Player's hand (=one empty wooden bucket).
+	 * @param blockHitResult Block hit by player.
+	 * @return The usual {@link InteractionResult} of {@link #use(Level, Player, InteractionHand)}.
 	 */
 	protected InteractionResult fillEmptyBucket(
 		Level level, Player user, ItemStack itemStack, BlockHitResult blockHitResult) {
@@ -81,13 +80,13 @@ public class WoodenBucketItem
 	}
 
 	/**
-	 * Empty bucket, if possible
+	 * Empty bucket, if possible.
 	 *
-	 * @param world          Level
-	 * @param user           Player
-	 * @param itemStack      ItemStack in Player's hand (=one wooden bucket filled with water)
-	 * @param blockHitResult Block hit by player
-	 * @return The usual {@link InteractionResult} of {@link #use(Level, Player, InteractionHand)}
+	 * @param world          Level.
+	 * @param user           Player.
+	 * @param itemStack      ItemStack in Player's hand (=one wooden bucket filled with water).
+	 * @param blockHitResult Block hit by player.
+	 * @return The usual {@link InteractionResult} of {@link #use(Level, Player, InteractionHand)}.
 	 */
 	protected InteractionResult emptyBucket(
 		Level world, Player user, ItemStack itemStack, BlockHitResult blockHitResult) {
@@ -102,19 +101,21 @@ public class WoodenBucketItem
 				CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) user, targetPos, itemStack);
 			}
 			user.awardStat(Stats.ITEM_USED.get(this));
-			ItemStack emptiedStack = ItemUtils.createFilledResult(itemStack, user, getEmptiedStack(itemStack, user));
+			ItemStack emptiedStack = ItemUtils.createFilledResult(itemStack, user, getEmptySuccessItem(itemStack, user));
 			return InteractionResult.SUCCESS.heldItemTransformedTo(emptiedStack);
 		}
 		return InteractionResult.FAIL;
 	}
 
 	/**
-	 * Use wooden bucket on a block
+	 * Use wooden bucket on a block.
+	 * <p>
+	 * Similar to {@link BucketItem#use(Level, Player, InteractionHand)}.
 	 *
-	 * @param world Level
-	 * @param user  Player
-	 * @param hand  Active hand
-	 * @return The usual {@link InteractionResult} values
+	 * @param world Level.
+	 * @param user  Player.
+	 * @param hand  Active hand.
+	 * @return The usual {@link InteractionResult} values.
 	 */
 	@Override
 	@NotNull
@@ -134,10 +135,14 @@ public class WoodenBucketItem
 		return emptyBucket(world, user, itemStack, blockHitResult);
 	}
 
-	public static ItemStack getEmptiedStack(ItemStack stack, Player player) {
-		if (!player.hasInfiniteMaterials()) {
-			return new ItemStack(ModItems.WOODEN_BUCKET_ITEM);
-		}
-		return stack;
+	/**
+	 * Do not empty the bucket in creative mode.
+	 * <p>
+	 * Similar to {@link BucketItem#getEmptySuccessItem(ItemStack, Player)}.
+	 */
+	@NotNull
+	public static ItemStack getEmptySuccessItem(ItemStack stack, Player player) {
+		return !player.hasInfiniteMaterials() ?
+			new ItemStack(ModItems.WOODEN_BUCKET_ITEM) : stack;
 	}
 }

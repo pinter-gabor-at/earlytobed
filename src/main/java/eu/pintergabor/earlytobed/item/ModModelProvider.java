@@ -15,10 +15,16 @@ public class ModModelProvider extends FabricModelProvider {
 		super(output);
 	}
 
+	/**
+	 * There are no blocks in this mod.
+	 */
 	@Override
 	public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
 	}
 
+	/**
+	 * Create item models.
+	 */
 	@Override
 	public void generateItemModels(ItemModelGenerators itemModelGenerator) {
 		itemModelGenerator.generateFlatItem(ModItems.WOODEN_BUCKET_ITEM, FLAT_ITEM);

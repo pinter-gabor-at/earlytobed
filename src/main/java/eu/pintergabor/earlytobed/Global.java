@@ -19,7 +19,7 @@ public final class Global {
 	 *
 	 * @param path Name, as in lang/*.json files without "*.modid." prefix
 	 */
-	public static ResourceLocation ModIdentifier(String path) {
+	public static ResourceLocation ModId(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
 }

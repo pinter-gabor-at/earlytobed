@@ -12,9 +12,12 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 
 
-public class ModRecipeProvider extends RecipeProvider.Runner {
+/**
+ * The standard boilerplace to create recipes in {@link ModRecipeGenerator}.
+ */
+public class ModRecipeRunner extends RecipeProvider.Runner {
 
-	public ModRecipeProvider(
+	public ModRecipeRunner(
 		FabricDataOutput output,
 		CompletableFuture<HolderLookup.Provider> registries) {
 		super(output, registries);
@@ -22,7 +25,8 @@ public class ModRecipeProvider extends RecipeProvider.Runner {
 
 	@Override
 	@NotNull
-	protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
+	protected RecipeProvider createRecipeProvider(
+		HolderLookup.Provider registries, RecipeOutput output) {
 		return new ModRecipeGenerator(registries, output);
 	}
 

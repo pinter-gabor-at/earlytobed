@@ -15,33 +15,33 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
 
 public final class ModItems {
-	// A wooden bucket
+	// A wooden bucket.
 	public static WoodenBucketItem WOODEN_BUCKET_ITEM;
-	// A wooden bucket, filled with water
+	// A wooden bucket, filled with water.
 	public static WoodenBucketItem WOODEN_WATER_BUCKET_ITEM;
-	// Wooden shears
+	// Wooden shears.
 	public static ShearsItem WOODEN_SHEARS_ITEM;
 
 	public static void register() {
-		// Create and register wooden buckets
+		// Create and register wooden buckets.
 		WOODEN_BUCKET_ITEM = (WoodenBucketItem) Items.registerItem(
-			ResourceKey.create(Registries.ITEM, Global.ModIdentifier("wooden_bucket")),
+			ResourceKey.create(Registries.ITEM, Global.ModId("wooden_bucket")),
 			settings -> new WoodenBucketItem(Fluids.EMPTY, settings),
 			new Item.Properties().stacksTo(16));
 		WOODEN_WATER_BUCKET_ITEM = (WoodenBucketItem) Items.registerItem(
-			ResourceKey.create(Registries.ITEM, Global.ModIdentifier("wooden_water_bucket")),
+			ResourceKey.create(Registries.ITEM, Global.ModId("wooden_water_bucket")),
 			settings -> new WoodenBucketItem(Fluids.WATER, settings),
 			new Item.Properties()
 				.craftRemainder(WOODEN_BUCKET_ITEM)
 				.stacksTo(1));
-		// Create and register wooden shears
+		// Create and register wooden shears.
 		WOODEN_SHEARS_ITEM = (ShearsItem) Items.registerItem(
-			ResourceKey.create(Registries.ITEM, Global.ModIdentifier("wooden_shears")),
+			ResourceKey.create(Registries.ITEM, Global.ModId("wooden_shears")),
 			ShearsItem::new,
 			new Item.Properties()
 				.durability(3)
 				.component(DataComponents.TOOL, ShearsItem.createToolProperties()));
-		// Item groups
+		// Item groups.
 		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(
 			entries -> {
 				entries.prepend(WOODEN_BUCKET_ITEM);

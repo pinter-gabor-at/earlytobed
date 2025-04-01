@@ -13,6 +13,9 @@ public class ModRecipeGenerator extends RecipeProvider {
 		super(registries, output);
 	}
 
+	/**
+	 * Generate recipes.
+	 */
 	@Override
 	public void buildRecipes() {
 		shaped(RecipeCategory.TOOLS, ModItems.WOODEN_BUCKET_ITEM)
