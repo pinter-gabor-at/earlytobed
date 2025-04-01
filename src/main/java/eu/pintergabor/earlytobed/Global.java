@@ -1,12 +1,13 @@
 package eu.pintergabor.earlytobed;
 
+import net.minecraft.resources.ResourceLocation;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.minecraft.util.Identifier;
-
 
 public final class Global {
+
 	// Used for logging and registration
 	public static final String MODID = "earlytobed";
 	// This logger is used to write text to the console and the log file.
@@ -18,7 +19,7 @@ public final class Global {
 	 *
 	 * @param path Name, as in lang/*.json files without "*.modid." prefix
 	 */
-	public static Identifier ModIdentifier(String path) {
-		return Identifier.of(MODID, path);
+	public static ResourceLocation ModIdentifier(String path) {
+		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
 }

@@ -2,14 +2,14 @@ package eu.pintergabor.earlytobed.item;
 
 import eu.pintergabor.earlytobed.Global;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.Items;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.level.material.Fluids;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
@@ -24,25 +24,29 @@ public final class ModItems {
 
 	public static void register() {
 		// Create and register wooden buckets
-		WOODEN_BUCKET_ITEM = (WoodenBucketItem) Items.register(
-			RegistryKey.of(RegistryKeys.ITEM, Global.ModIdentifier("wooden_bucket")),
+		WOODEN_BUCKET_ITEM = (WoodenBucketItem) Items.registerItem(
+			ResourceKey.create(Registries.ITEM, Global.ModIdentifier("wooden_bucket")),
 			settings -> new WoodenBucketItem(Fluids.EMPTY, settings),
-			new Item.Settings().maxCount(16));
-		WOODEN_WATER_BUCKET_ITEM = (WoodenBucketItem) Items.register(
-			RegistryKey.of(RegistryKeys.ITEM, Global.ModIdentifier("wooden_water_bucket")),
+			new Item.Properties().stacksTo(16));
+		WOODEN_WATER_BUCKET_ITEM = (WoodenBucketItem) Items.registerItem(
+			ResourceKey.create(Registries.ITEM, Global.ModIdentifier("wooden_water_bucket")),
 			settings -> new WoodenBucketItem(Fluids.WATER, settings),
-			new Item.Settings().recipeRemainder(WOODEN_BUCKET_ITEM).maxCount(1));
+			new Item.Properties()
+				.craftRemainder(WOODEN_BUCKET_ITEM)
+				.stacksTo(1));
 		// Create and register wooden shears
-		WOODEN_SHEARS_ITEM = (ShearsItem) Items.register(
-			RegistryKey.of(RegistryKeys.ITEM, Global.ModIdentifier("wooden_shears")),
+		WOODEN_SHEARS_ITEM = (ShearsItem) Items.registerItem(
+			ResourceKey.create(Registries.ITEM, Global.ModIdentifier("wooden_shears")),
 			ShearsItem::new,
-			new Item.Settings().maxDamage(3).component(DataComponentTypes.TOOL, ShearsItem.createToolComponent()));
+			new Item.Properties()
+				.durability(3)
+				.component(DataComponents.TOOL, ShearsItem.createToolProperties()));
 		// Item groups
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(
+		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(
 			entries -> {
-				entries.add(WOODEN_BUCKET_ITEM);
-				entries.add(WOODEN_WATER_BUCKET_ITEM);
-				entries.add(WOODEN_SHEARS_ITEM);
+				entries.prepend(WOODEN_BUCKET_ITEM);
+				entries.prepend(WOODEN_WATER_BUCKET_ITEM);
+				entries.prepend(WOODEN_SHEARS_ITEM);
 			});
 	}
 }
