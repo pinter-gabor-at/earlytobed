@@ -1,52 +1,50 @@
 package eu.pintergabor.earlytobed.item;
 
 import eu.pintergabor.earlytobed.Global;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.material.Fluids;
 
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
-
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = Global.MODID, value = Dist.CLIENT)
 public final class ModItems {
+	// Only used in ModCommon for registration.
+	public static final DeferredRegister.Items ITEMS =
+		DeferredRegister.createItems(Global.MODID);
 	// A wooden bucket.
-	public static WoodenBucketItem WOODEN_BUCKET_ITEM;
-	// A wooden bucket, filled with water.
-	public static WoodenBucketItem WOODEN_WATER_BUCKET_ITEM;
-	// Wooden shears.
-	public static ShearsItem WOODEN_SHEARS_ITEM;
-
-	public static void register() {
-		// Create and register wooden buckets.
-		WOODEN_BUCKET_ITEM = (WoodenBucketItem) Items.registerItem(
-			ResourceKey.create(Registries.ITEM, Global.ModId("wooden_bucket")),
-			settings -> new WoodenBucketItem(Fluids.EMPTY, settings),
+	public static final DeferredItem<Item> WOODEN_BUCKET_ITEM =
+		ITEMS.registerItem("wooden_bucket",
+			properties -> new WoodenBucketItem(Fluids.EMPTY, properties),
 			new Item.Properties().stacksTo(16));
-		WOODEN_WATER_BUCKET_ITEM = (WoodenBucketItem) Items.registerItem(
-			ResourceKey.create(Registries.ITEM, Global.ModId("wooden_water_bucket")),
-			settings -> new WoodenBucketItem(Fluids.WATER, settings),
+	// A wooden bucket, filled with water.
+	public static final DeferredItem<Item> WOODEN_WATER_BUCKET_ITEM =
+		ITEMS.registerItem("wooden_water_bucket",
+			properties -> new WoodenBucketItem(Fluids.WATER, properties),
 			new Item.Properties()
-				.craftRemainder(WOODEN_BUCKET_ITEM)
 				.stacksTo(1));
-		// Create and register wooden shears.
-		WOODEN_SHEARS_ITEM = (ShearsItem) Items.registerItem(
-			ResourceKey.create(Registries.ITEM, Global.ModId("wooden_shears")),
-			ShearsItem::new,
+	// Wooden shears.
+	public static final DeferredItem<Item> WOODEN_SHEARS_ITEM =
+		ITEMS.registerItem("wooden_shears",
+			WoodenShearsItem::new,
 			new Item.Properties()
-				.durability(3)
-				.component(DataComponents.TOOL, ShearsItem.createToolProperties()));
-		// Item groups.
-		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(
-			entries -> {
-				entries.prepend(WOODEN_BUCKET_ITEM);
-				entries.prepend(WOODEN_WATER_BUCKET_ITEM);
-				entries.prepend(WOODEN_SHEARS_ITEM);
-			});
+				.durability(3));
+
+	/**
+	 * Add items to creative tabs.
+	 */
+	@SubscribeEvent
+	public static void creativeTabs(BuildCreativeModeTabContentsEvent event) {
+		if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+			event.accept(WOODEN_BUCKET_ITEM);
+			event.accept(WOODEN_WATER_BUCKET_ITEM);
+			event.accept(WOODEN_SHEARS_ITEM);
+		}
 	}
 }

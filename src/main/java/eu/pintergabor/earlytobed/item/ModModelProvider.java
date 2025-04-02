@@ -2,33 +2,30 @@ package eu.pintergabor.earlytobed.item;
 
 import static net.minecraft.client.data.models.model.ModelTemplates.FLAT_ITEM;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.data.PackOutput;
 
-import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 
+public class ModModelProvider extends ModelProvider {
 
-public class ModModelProvider extends FabricModelProvider {
-
-	public ModModelProvider(FabricDataOutput output) {
-		super(output);
-	}
-
-	/**
-	 * There are no blocks in this mod.
-	 */
-	@Override
-	public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+	public ModModelProvider(PackOutput output, String modId) {
+		super(output, modId);
 	}
 
 	/**
 	 * Create item models.
 	 */
 	@Override
-	public void generateItemModels(ItemModelGenerators itemModelGenerator) {
-		itemModelGenerator.generateFlatItem(ModItems.WOODEN_BUCKET_ITEM, FLAT_ITEM);
-		itemModelGenerator.generateFlatItem(ModItems.WOODEN_WATER_BUCKET_ITEM, FLAT_ITEM);
-		itemModelGenerator.generateFlatItem(ModItems.WOODEN_SHEARS_ITEM, FLAT_ITEM);
+	protected void registerModels(
+		@NotNull BlockModelGenerators blockModels,
+		@NotNull ItemModelGenerators itemModels) {
+		super.registerModels(blockModels, itemModels);
+		itemModels.generateFlatItem(ModItems.WOODEN_BUCKET_ITEM.asItem(), FLAT_ITEM);
+		itemModels.generateFlatItem(ModItems.WOODEN_WATER_BUCKET_ITEM.asItem(), FLAT_ITEM);
+		itemModels.generateFlatItem(ModItems.WOODEN_SHEARS_ITEM.asItem(), FLAT_ITEM);
 	}
 }

@@ -28,6 +28,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 
+/**
+ * Similar to {@link BucketItem}, but only for water.
+ */
 public class WoodenBucketItem extends BucketItem {
 
 	// It must be duplicated, because it is private in BucketItem.
@@ -39,7 +42,9 @@ public class WoodenBucketItem extends BucketItem {
 	 * @param fluid {@link Fluids#EMPTY} or {@link Fluids#WATER}.
 	 */
 	public WoodenBucketItem(Fluid fluid, Item.Properties properties) {
-		super(fluid, properties);
+		super(fluid, fluid != Fluids.EMPTY ?
+			properties.craftRemainder(ModItems.WOODEN_BUCKET_ITEM.asItem()) :
+			properties);
 		this.fluid = fluid;
 	}
 
@@ -64,9 +69,9 @@ public class WoodenBucketItem extends BucketItem {
 			// Normally it returns a WATER_BUCKET_ITEM
 			if (!emptiedStack.isEmpty()) {
 				// Change it to WOODEN_WATER_BUCKET_ITEM
-				emptiedStack = new ItemStack(ModItems.WOODEN_WATER_BUCKET_ITEM);
+				emptiedStack = new ItemStack(ModItems.WOODEN_WATER_BUCKET_ITEM.asItem());
 				user.awardStat(Stats.ITEM_USED.get(this));
-				bucketPickup.getPickupSound().ifPresent(
+				Fluids.WATER.getPickupSound().ifPresent(
 					(sound) -> user.playSound(sound, 1F, 1F));
 				level.gameEvent(user, GameEvent.FLUID_PICKUP, blockHitPos);
 				ItemStack filledStack = ItemUtils.createFilledResult(itemStack, user, emptiedStack);
@@ -95,7 +100,7 @@ public class WoodenBucketItem extends BucketItem {
 		BlockPos blockNextPos = blockHitPos.relative(direction);
 		BlockState blockState = world.getBlockState(blockHitPos);
 		BlockPos targetPos = (blockState.getBlock() instanceof LiquidBlockContainer) ? blockHitPos : blockNextPos;
-		if (emptyContents(user, world, targetPos, blockHitResult)) {
+		if (emptyContents(user, world, targetPos, blockHitResult, null)) {
 			checkExtraContent(user, world, itemStack, targetPos);
 			if (user instanceof ServerPlayer) {
 				CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) user, targetPos, itemStack);
@@ -120,7 +125,7 @@ public class WoodenBucketItem extends BucketItem {
 	@Override
 	@NotNull
 	public InteractionResult use(
-		Level world, Player user, InteractionHand hand) {
+		@NotNull Level world, Player user, @NotNull InteractionHand hand) {
 		ItemStack itemStack = user.getItemInHand(hand);
 		BlockHitResult blockHitResult = getPlayerPOVHitResult(world, user,
 			fluid == Fluids.EMPTY ?
@@ -141,8 +146,9 @@ public class WoodenBucketItem extends BucketItem {
 	 * Similar to {@link BucketItem#getEmptySuccessItem(ItemStack, Player)}.
 	 */
 	@NotNull
-	public static ItemStack getEmptySuccessItem(ItemStack stack, Player player) {
+	public static ItemStack getEmptySuccessItem(
+		@NotNull ItemStack stack, Player player) {
 		return !player.hasInfiniteMaterials() ?
-			new ItemStack(ModItems.WOODEN_BUCKET_ITEM) : stack;
+			new ItemStack(ModItems.WOODEN_BUCKET_ITEM.asItem()) : stack;
 	}
 }
