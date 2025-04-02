@@ -17,8 +17,10 @@ import static eu.pintergabor.earlytobed.item.ModItems.WOODEN_SHEARS_ITEM;
 import static net.minecraft.entity.LivingEntity.getSlotForHand;
 
 /**
- * Inject code into SheepEntity#interactMob The code is identical to the original one, but checks for WOODEN_SHEARS_ITEM
- * instead of SHEARS
+ * Inject code into SheepEntity#interactMob.
+ * <p>
+ * The code is identical to the original one,
+ * but checks for WOODEN_SHEARS_ITEM instead of SHEARS.
  */
 @Mixin(SheepEntity.class)
 public abstract class WoodenShearsMixin {
