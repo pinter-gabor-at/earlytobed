@@ -42,9 +42,7 @@ public class WoodenBucketItem extends BucketItem {
 	 * @param fluid {@link Fluids#EMPTY} or {@link Fluids#WATER}.
 	 */
 	public WoodenBucketItem(Fluid fluid, Item.Properties properties) {
-		super(fluid, fluid != Fluids.EMPTY ?
-			properties.craftRemainder(ModItems.WOODEN_BUCKET_ITEM.asItem()) :
-			properties);
+		super(fluid, properties);
 		this.fluid = fluid;
 	}
 

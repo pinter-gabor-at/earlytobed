@@ -8,8 +8,10 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.material.Fluids;
 
 
@@ -21,20 +23,20 @@ public final class ModItems {
 	// A wooden bucket.
 	public static final DeferredItem<Item> WOODEN_BUCKET_ITEM =
 		ITEMS.registerItem("wooden_bucket",
-			properties -> new WoodenBucketItem(Fluids.EMPTY, properties),
-			new Item.Properties().stacksTo(16));
+			properties -> new WoodenBucketItem(Fluids.EMPTY, properties
+				.stacksTo(16)));
 	// A wooden bucket, filled with water.
 	public static final DeferredItem<Item> WOODEN_WATER_BUCKET_ITEM =
 		ITEMS.registerItem("wooden_water_bucket",
-			properties -> new WoodenBucketItem(Fluids.WATER, properties),
-			new Item.Properties()
-				.stacksTo(1));
+			properties -> new WoodenBucketItem(Fluids.WATER, properties
+				.stacksTo(1)
+				.craftRemainder(WOODEN_BUCKET_ITEM.asItem())));
 	// Wooden shears.
 	public static final DeferredItem<Item> WOODEN_SHEARS_ITEM =
 		ITEMS.registerItem("wooden_shears",
-			WoodenShearsItem::new,
-			new Item.Properties()
-				.durability(3));
+			properties -> new ShearsItem(properties
+				.durability(3)
+				.component(DataComponents.TOOL, ShearsItem.createToolProperties())));
 
 	/**
 	 * Add items to creative tabs.
