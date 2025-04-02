@@ -20,7 +20,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 
 
 /**
- * Inject code into SheepEntity#interactMob
+ * Inject code into SheepEntity#interactMob.
  * <p>
  * The code is identical to the original one,
  * but checks for WOODEN_SHEARS_ITEM instead of SHEARS.
