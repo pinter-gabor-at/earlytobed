@@ -15,11 +15,11 @@ public final class Global {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
 	/**
-	 * Create a mod specific identifier
+	 * Create a mod specific identifier.
 	 *
-	 * @param path Name, as in lang/*.json files without "*.modid." prefix
+	 * @param path Name, as in lang/*.json files without "*.modid." prefix.
 	 */
-	public static ResourceLocation ModId(String path) {
+	public static ResourceLocation modId(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
 }

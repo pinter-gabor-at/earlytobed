@@ -25,18 +25,18 @@ public final class ModItems {
 	public static void register() {
 		// Create and register wooden buckets.
 		WOODEN_BUCKET_ITEM = (WoodenBucketItem) Items.registerItem(
-			ResourceKey.create(Registries.ITEM, Global.ModId("wooden_bucket")),
+			ResourceKey.create(Registries.ITEM, Global.modId("wooden_bucket")),
 			settings -> new WoodenBucketItem(Fluids.EMPTY, settings),
 			new Item.Properties().stacksTo(16));
 		WOODEN_WATER_BUCKET_ITEM = (WoodenBucketItem) Items.registerItem(
-			ResourceKey.create(Registries.ITEM, Global.ModId("wooden_water_bucket")),
+			ResourceKey.create(Registries.ITEM, Global.modId("wooden_water_bucket")),
 			settings -> new WoodenBucketItem(Fluids.WATER, settings),
 			new Item.Properties()
 				.craftRemainder(WOODEN_BUCKET_ITEM)
 				.stacksTo(1));
 		// Create and register wooden shears.
 		WOODEN_SHEARS_ITEM = (ShearsItem) Items.registerItem(
-			ResourceKey.create(Registries.ITEM, Global.ModId("wooden_shears")),
+			ResourceKey.create(Registries.ITEM, Global.modId("wooden_shears")),
 			ShearsItem::new,
 			new Item.Properties()
 				.durability(3)
