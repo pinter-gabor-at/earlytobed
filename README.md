@@ -1,4 +1,4 @@
-# Minecraft Early to Bed Mod
+# Minecraft Early to Bed Mod (Fabric and NeoForge)
 
 "Early to bed, early to rise, makes a man healthy, wealthy, and wise"
 
@@ -23,8 +23,7 @@ Standard MIT license. Feel free to learn from it and incorporate it in your own 
 
 ## Source code
 
-Fabric and NeoForged versions: on [GitLab](https://gitlab.com/pintergabor/earlytobed.git) or on [GitHub](https://github.com/pinter-gabor-at/earlytobed.git).  
-Forge version: on [GitLab](https://gitlab.com/pintergabor/earlytobed-forge.git) or on [GitHub](https://github.com/pinter-gabor-at/earlytobed-forge.git).
+Available on [GitLab](https://gitlab.com/pintergabor/earlytobed.git) or on [GitHub](https://github.com/pinter-gabor-at/earlytobed.git).
 
 
 ## For developers
