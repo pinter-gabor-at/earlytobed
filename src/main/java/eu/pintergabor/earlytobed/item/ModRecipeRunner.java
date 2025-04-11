@@ -34,5 +34,4 @@ public class ModRecipeRunner extends RecipeProvider.Runner {
 	public String getName() {
 		return Global.MODID + " recipes";
 	}
-
 }

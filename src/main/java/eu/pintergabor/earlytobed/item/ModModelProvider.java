@@ -2,6 +2,7 @@ package eu.pintergabor.earlytobed.item;
 
 import static net.minecraft.client.data.models.model.ModelTemplates.FLAT_ITEM;
 
+import eu.pintergabor.earlytobed.Global;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -12,8 +13,8 @@ import net.minecraft.data.PackOutput;
 
 public class ModModelProvider extends ModelProvider {
 
-	public ModModelProvider(PackOutput output, String modId) {
-		super(output, modId);
+	public ModModelProvider(PackOutput output) {
+		super(output, Global.MODID);
 	}
 
 	/**
