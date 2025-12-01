@@ -15,7 +15,7 @@ import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.material.Fluids;
 
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = Global.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Global.MODID, value = Dist.CLIENT)
 public final class ModItems {
 	// Only used in ModCommon for registration.
 	public static final DeferredRegister.Items ITEMS =
