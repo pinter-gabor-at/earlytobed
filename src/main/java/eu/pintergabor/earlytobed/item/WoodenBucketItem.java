@@ -70,7 +70,7 @@ public class WoodenBucketItem extends BucketItem {
 					(sound) -> user.playSound(sound, 1F, 1F));
 				level.gameEvent(user, GameEvent.FLUID_PICKUP, blockHitPos);
 				ItemStack filledStack = ItemUtils.createFilledResult(itemStack, user, emptiedStack);
-				if (!level.isClientSide) {
+				if (!level.isClientSide()) {
 					CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) user, emptiedStack);
 				}
 				return InteractionResult.SUCCESS.heldItemTransformedTo(filledStack);
