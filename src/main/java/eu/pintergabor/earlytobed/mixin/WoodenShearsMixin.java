@@ -2,7 +2,6 @@ package eu.pintergabor.earlytobed.mixin;
 
 
 import static eu.pintergabor.earlytobed.item.ModItems.WOODEN_SHEARS_ITEM;
-import static net.minecraft.world.entity.LivingEntity.getSlotForHand;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -40,7 +39,7 @@ public abstract class WoodenShearsMixin {
 			if (that.level() instanceof ServerLevel serverLevel && that.readyForShearing()) {
 				that.shear(serverLevel, SoundSource.PLAYERS, itemStack);
 				that.gameEvent(GameEvent.SHEAR, player);
-				itemStack.hurtAndBreak(1, player, getSlotForHand(hand));
+				itemStack.hurtAndBreak(1, player, hand.asEquipmentSlot());
 				cir.setReturnValue(InteractionResult.SUCCESS_SERVER);
 			} else {
 				cir.setReturnValue(InteractionResult.CONSUME);
