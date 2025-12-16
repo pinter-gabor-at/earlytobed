@@ -8,7 +8,7 @@ license = "MIT"
 # Mod parameters.
 [[mods]]
 modId = "${mod_id}"
-version = "${mod_version}"
+version = "${version}"
 displayName = "EarlyToBed"
 description = "A few items to make very early game a bit easier to play."
 authors = "Pintér Gábor <pinter.gabor@gmx.at>"
