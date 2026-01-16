@@ -3,7 +3,7 @@ package eu.pintergabor.earlytobed.item;
 import java.util.concurrent.CompletableFuture;
 
 import eu.pintergabor.earlytobed.Global;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -19,21 +19,20 @@ public class ModRecipeRunner extends RecipeProvider.Runner {
 
 	public ModRecipeRunner(
 		FabricDataOutput output,
-		CompletableFuture<HolderLookup.Provider> registries) {
+		CompletableFuture<HolderLookup.Provider> registries
+	) {
 		super(output, registries);
 	}
 
 	@Override
-	@NotNull
-	protected RecipeProvider createRecipeProvider(
-		HolderLookup.Provider registries, RecipeOutput output) {
+	protected @NonNull RecipeProvider createRecipeProvider(
+		HolderLookup.@NonNull Provider registries, @NonNull RecipeOutput output
+	) {
 		return new ModRecipeGenerator(registries, output);
 	}
 
 	@Override
-	@NotNull
-	public String getName() {
+	public @NonNull String getName() {
 		return Global.MODID + " recipes";
 	}
-
 }

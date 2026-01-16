@@ -7,9 +7,9 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.tags.ItemTags;
 
 
-public class ModRecipeGenerator extends RecipeProvider {
+public final class ModRecipeGenerator extends RecipeProvider {
 
-	protected ModRecipeGenerator(HolderLookup.Provider registries, RecipeOutput output) {
+	 public ModRecipeGenerator(HolderLookup.Provider registries, RecipeOutput output) {
 		super(registries, output);
 	}
 
