@@ -1,6 +1,7 @@
 package eu.pintergabor.earlytobed.item;
 
-import org.jetbrains.annotations.NotNull;
+
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -28,50 +29,48 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 
-public class WoodenBucketItem extends BucketItem {
-
-	// It must be duplicated, because it is private in BucketItem.
-	protected final Fluid fluid;
+public final class WoodenBucketItem extends BucketItem {
 
 	/**
 	 * Create a wooden bucket.
 	 *
-	 * @param fluid {@link Fluids#EMPTY} or {@link Fluids#WATER}.
+	 * @param content {@link Fluids#EMPTY} or {@link Fluids#WATER}.
 	 */
-	public WoodenBucketItem(Fluid fluid, Item.Properties properties) {
-		super(fluid, properties);
-		this.fluid = fluid;
+	public WoodenBucketItem(Fluid content, Item.Properties properties) {
+		super(content, properties);
 	}
 
 	/**
 	 * Fill empty bucket, if possible.
 	 *
 	 * @param level          Level.
-	 * @param user           Player.
+	 * @param player         Player.
 	 * @param itemStack      ItemStack in Player's hand (=one empty wooden bucket).
 	 * @param blockHitResult Block hit by player.
 	 * @return The usual {@link InteractionResult} of {@link #use(Level, Player, InteractionHand)}.
 	 */
-	protected InteractionResult fillEmptyBucket(
-		Level level, Player user, ItemStack itemStack, BlockHitResult blockHitResult) {
-		BlockPos blockHitPos = blockHitResult.getBlockPos();
-		BlockState blockState = level.getBlockState(blockHitPos);
-		Block block = blockState.getBlock();
+	private @NonNull InteractionResult fillEmptyBucket(
+		@NonNull Level level, @NonNull Player player,
+		@NonNull ItemStack itemStack, @NonNull BlockHitResult blockHitResult
+	) {
+		final BlockPos blockHitPos = blockHitResult.getBlockPos();
+		final BlockState blockState = level.getBlockState(blockHitPos);
+		final Block block = blockState.getBlock();
 		if (block == Blocks.WATER) {
 			// Try to empty it
-			BucketPickup bucketPickup = (BucketPickup) block;
-			ItemStack emptiedStack = bucketPickup.pickupBlock(user, level, blockHitPos, blockState);
+			final BucketPickup bucketPickup = (BucketPickup) block;
+			final ItemStack emptiedStack = bucketPickup.pickupBlock(player, level, blockHitPos, blockState);
 			// Normally it returns a WATER_BUCKET_ITEM
 			if (!emptiedStack.isEmpty()) {
 				// Change it to WOODEN_WATER_BUCKET_ITEM
-				emptiedStack = new ItemStack(ModItems.WOODEN_WATER_BUCKET_ITEM);
-				user.awardStat(Stats.ITEM_USED.get(this));
+				final ItemStack modEmptiedStack = new ItemStack(ModItems.WOODEN_WATER_BUCKET_ITEM);
+				player.awardStat(Stats.ITEM_USED.get(this));
 				bucketPickup.getPickupSound().ifPresent(
-					(sound) -> user.playSound(sound, 1F, 1F));
-				level.gameEvent(user, GameEvent.FLUID_PICKUP, blockHitPos);
-				ItemStack filledStack = ItemUtils.createFilledResult(itemStack, user, emptiedStack);
+					(sound) -> player.playSound(sound, 1F, 1F));
+				level.gameEvent(player, GameEvent.FLUID_PICKUP, blockHitPos);
+				final ItemStack filledStack = ItemUtils.createFilledResult(itemStack, player, modEmptiedStack);
 				if (!level.isClientSide()) {
-					CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) user, emptiedStack);
+					CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, modEmptiedStack);
 				}
 				return InteractionResult.SUCCESS.heldItemTransformedTo(filledStack);
 			}
@@ -88,8 +87,10 @@ public class WoodenBucketItem extends BucketItem {
 	 * @param blockHitResult Block hit by player.
 	 * @return The usual {@link InteractionResult} of {@link #use(Level, Player, InteractionHand)}.
 	 */
-	protected InteractionResult emptyBucket(
-		Level world, Player user, ItemStack itemStack, BlockHitResult blockHitResult) {
+	private @NonNull InteractionResult emptyBucket(
+		@NonNull Level world, @NonNull Player user,
+		@NonNull ItemStack itemStack, @NonNull BlockHitResult blockHitResult
+	) {
 		BlockPos blockHitPos = blockHitResult.getBlockPos();
 		Direction direction = blockHitResult.getDirection();
 		BlockPos blockNextPos = blockHitPos.relative(direction);
@@ -112,27 +113,27 @@ public class WoodenBucketItem extends BucketItem {
 	 * <p>
 	 * Similar to {@link BucketItem#use(Level, Player, InteractionHand)}.
 	 *
-	 * @param world Level.
-	 * @param user  Player.
-	 * @param hand  Active hand.
+	 * @param level  Level.
+	 * @param player Player.
+	 * @param hand   Active hand.
 	 * @return The usual {@link InteractionResult} values.
 	 */
 	@Override
-	@NotNull
-	public InteractionResult use(
-		Level world, Player user, InteractionHand hand) {
-		ItemStack itemStack = user.getItemInHand(hand);
-		BlockHitResult blockHitResult = getPlayerPOVHitResult(world, user,
-			fluid == Fluids.EMPTY ?
+	public @NonNull InteractionResult use(
+		@NonNull Level level, @NonNull Player player, @NonNull InteractionHand hand
+	) {
+		final ItemStack itemStack = player.getItemInHand(hand);
+		final BlockHitResult blockHitResult = getPlayerPOVHitResult(level, player,
+			content == Fluids.EMPTY ?
 				ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
 		if (blockHitResult.getType() == HitResult.Type.MISS) {
 			return InteractionResult.PASS;
 		} else if (blockHitResult.getType() != HitResult.Type.BLOCK) {
 			return InteractionResult.PASS;
-		} else if (fluid == Fluids.EMPTY) {
-			return fillEmptyBucket(world, user, itemStack, blockHitResult);
+		} else if (content == Fluids.EMPTY) {
+			return fillEmptyBucket(level, player, itemStack, blockHitResult);
 		}
-		return emptyBucket(world, user, itemStack, blockHitResult);
+		return emptyBucket(level, player, itemStack, blockHitResult);
 	}
 
 	/**
@@ -140,8 +141,9 @@ public class WoodenBucketItem extends BucketItem {
 	 * <p>
 	 * Similar to {@link BucketItem#getEmptySuccessItem(ItemStack, Player)}.
 	 */
-	@NotNull
-	public static ItemStack getEmptySuccessItem(ItemStack stack, Player player) {
+	public static @NonNull ItemStack getEmptySuccessItem(
+		@NonNull ItemStack stack, @NonNull Player player
+	) {
 		return !player.hasInfiniteMaterials() ?
 			new ItemStack(ModItems.WOODEN_BUCKET_ITEM) : stack;
 	}

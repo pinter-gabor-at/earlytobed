@@ -1,17 +1,19 @@
 package eu.pintergabor.earlytobed;
 
 import eu.pintergabor.earlytobed.item.ModModelProvider;
-import eu.pintergabor.earlytobed.item.ModRecipeProvider;
+import eu.pintergabor.earlytobed.item.ModRecipeRunner;
+import org.jspecify.annotations.NonNull;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
 
-public class Datagen implements DataGeneratorEntrypoint {
+public final class ModDataGenerator implements DataGeneratorEntrypoint {
+
 	@Override
-	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
+	public void onInitializeDataGenerator(@NonNull FabricDataGenerator fabricDataGenerator) {
 		var pack = fabricDataGenerator.createPack();
 		pack.addProvider(ModModelProvider::new);
-		pack.addProvider(ModRecipeProvider::new);
+		pack.addProvider(ModRecipeRunner::new);
 	}
 }

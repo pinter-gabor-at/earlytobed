@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "${mod_id}",
+  "id": "earlytobed",
   "version": "${version}",
   "name": "EarlyToBed",
   "description": "A few items to make very early game a bit easier to play.",
@@ -19,7 +19,7 @@
       "eu.pintergabor.earlytobed.Mod"
     ],
     "fabric-datagen": [
-      "eu.pintergabor.earlytobed.Datagen"
+      "eu.pintergabor.earlytobed.ModDataGenerator"
     ]
   },
   "mixins": [
