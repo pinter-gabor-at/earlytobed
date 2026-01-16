@@ -3,6 +3,7 @@ package eu.pintergabor.earlytobed.mixin;
 
 import static eu.pintergabor.earlytobed.item.ModItems.WOODEN_SHEARS_ITEM;
 
+import org.jspecify.annotations.NonNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,8 +32,9 @@ public abstract class WoodenShearsMixin {
 		method = "mobInteract",
 		cancellable = true)
 	private void mobInteract(
-		Player player, InteractionHand hand,
-		CallbackInfoReturnable<InteractionResult> cir) {
+		@NonNull Player player, @NonNull InteractionHand hand,
+		CallbackInfoReturnable<InteractionResult> cir
+	) {
 		Sheep that = (Sheep) (Object) this;
 		ItemStack itemStack = player.getItemInHand(hand);
 		if (itemStack.is(WOODEN_SHEARS_ITEM)) {

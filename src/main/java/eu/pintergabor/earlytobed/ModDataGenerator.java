@@ -6,13 +6,14 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import org.jspecify.annotations.NonNull;
 
 
 @EventBusSubscriber(modid = Global.MODID, value = Dist.CLIENT)
-public class DataGen {
+public class ModDataGenerator {
 
 	@SubscribeEvent
-	public static void init(GatherDataEvent.Client event) {
+	public static void init(GatherDataEvent.@NonNull Client event) {
 		// Create models.
 		event.createProvider(ModModelProvider::new);
 		// Create recipes.

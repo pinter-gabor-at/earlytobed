@@ -3,7 +3,7 @@ package eu.pintergabor.earlytobed.item;
 import static net.minecraft.client.data.models.model.ModelTemplates.FLAT_ITEM;
 
 import eu.pintergabor.earlytobed.Global;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -22,8 +22,9 @@ public class ModModelProvider extends ModelProvider {
 	 */
 	@Override
 	protected void registerModels(
-		@NotNull BlockModelGenerators blockModels,
-		@NotNull ItemModelGenerators itemModels) {
+		@NonNull BlockModelGenerators blockModels,
+		@NonNull ItemModelGenerators itemModels
+	) {
 		itemModels.generateFlatItem(ModItems.WOODEN_BUCKET_ITEM.asItem(), FLAT_ITEM);
 		itemModels.generateFlatItem(ModItems.WOODEN_WATER_BUCKET_ITEM.asItem(), FLAT_ITEM);
 		itemModels.generateFlatItem(ModItems.WOODEN_SHEARS_ITEM.asItem(), FLAT_ITEM);
