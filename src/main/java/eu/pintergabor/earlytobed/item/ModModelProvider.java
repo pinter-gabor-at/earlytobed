@@ -22,8 +22,8 @@ public class ModModelProvider extends ModelProvider {
 	 */
 	@Override
 	protected void registerModels(
-		@NonNull BlockModelGenerators blockModels,
-		@NonNull ItemModelGenerators itemModels
+		final @NonNull BlockModelGenerators blockModels,
+		final @NonNull ItemModelGenerators itemModels
 	) {
 		itemModels.generateFlatItem(ModItems.WOODEN_BUCKET_ITEM.asItem(), FLAT_ITEM);
 		itemModels.generateFlatItem(ModItems.WOODEN_WATER_BUCKET_ITEM.asItem(), FLAT_ITEM);

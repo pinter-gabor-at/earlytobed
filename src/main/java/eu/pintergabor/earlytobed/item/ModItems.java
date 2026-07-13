@@ -7,6 +7,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -42,7 +43,7 @@ public final class ModItems {
 	 * Add items to creative tabs.
 	 */
 	@SubscribeEvent
-	public static void creativeTabs(BuildCreativeModeTabContentsEvent event) {
+	public static void creativeTabs(@NonNull BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
 			event.accept(WOODEN_BUCKET_ITEM);
 			event.accept(WOODEN_WATER_BUCKET_ITEM);
