@@ -1,6 +1,5 @@
 package eu.pintergabor.earlytobed.item;
 
-
 import org.jspecify.annotations.NonNull;
 
 import net.minecraft.advancements.CriteriaTriggers;
@@ -29,6 +28,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 
+/**
+ * Wooden bucket item.
+ */
 public final class WoodenBucketItem extends BucketItem {
 
 	/**
@@ -50,8 +52,8 @@ public final class WoodenBucketItem extends BucketItem {
 	 * @return The usual {@link InteractionResult} of {@link #use(Level, Player, InteractionHand)}.
 	 */
 	private @NonNull InteractionResult fillEmptyBucket(
-		@NonNull Level level, @NonNull Player player,
-		@NonNull ItemStack itemStack, @NonNull BlockHitResult blockHitResult
+		final @NonNull Level level, final @NonNull Player player,
+		final @NonNull ItemStack itemStack, final @NonNull BlockHitResult blockHitResult
 	) {
 		final BlockPos blockHitPos = blockHitResult.getBlockPos();
 		final BlockState blockState = level.getBlockState(blockHitPos);
@@ -81,28 +83,28 @@ public final class WoodenBucketItem extends BucketItem {
 	/**
 	 * Empty bucket, if possible.
 	 *
-	 * @param world          Level.
-	 * @param user           Player.
+	 * @param level          Level.
+	 * @param player         Player.
 	 * @param itemStack      ItemStack in Player's hand (=one wooden bucket filled with water).
 	 * @param blockHitResult Block hit by player.
 	 * @return The usual {@link InteractionResult} of {@link #use(Level, Player, InteractionHand)}.
 	 */
 	private @NonNull InteractionResult emptyBucket(
-		@NonNull Level world, @NonNull Player user,
-		@NonNull ItemStack itemStack, @NonNull BlockHitResult blockHitResult
+		final @NonNull Level level, final @NonNull Player player,
+		final @NonNull ItemStack itemStack, final @NonNull BlockHitResult blockHitResult
 	) {
 		BlockPos blockHitPos = blockHitResult.getBlockPos();
 		Direction direction = blockHitResult.getDirection();
 		BlockPos blockNextPos = blockHitPos.relative(direction);
-		BlockState blockState = world.getBlockState(blockHitPos);
+		BlockState blockState = level.getBlockState(blockHitPos);
 		BlockPos targetPos = (blockState.getBlock() instanceof LiquidBlockContainer) ? blockHitPos : blockNextPos;
-		if (emptyContents(user, world, targetPos, blockHitResult)) {
-			checkExtraContent(user, world, itemStack, targetPos);
-			if (user instanceof ServerPlayer) {
-				CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) user, targetPos, itemStack);
+		if (emptyContents(player, level, targetPos, blockHitResult)) {
+			checkExtraContent(player, level, itemStack, targetPos);
+			if (player instanceof ServerPlayer) {
+				CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, targetPos, itemStack);
 			}
-			user.awardStat(Stats.ITEM_USED.get(this));
-			ItemStack emptiedStack = ItemUtils.createFilledResult(itemStack, user, getEmptySuccessItem(itemStack, user));
+			player.awardStat(Stats.ITEM_USED.get(this));
+			ItemStack emptiedStack = ItemUtils.createFilledResult(itemStack, player, getEmptySuccessItem(itemStack, player));
 			return InteractionResult.SUCCESS.heldItemTransformedTo(emptiedStack);
 		}
 		return InteractionResult.FAIL;
@@ -120,7 +122,8 @@ public final class WoodenBucketItem extends BucketItem {
 	 */
 	@Override
 	public @NonNull InteractionResult use(
-		@NonNull Level level, @NonNull Player player, @NonNull InteractionHand hand
+		final @NonNull Level level, final @NonNull Player player,
+		final @NonNull InteractionHand hand
 	) {
 		final ItemStack itemStack = player.getItemInHand(hand);
 		final BlockHitResult blockHitResult = getPlayerPOVHitResult(level, player,
@@ -142,7 +145,7 @@ public final class WoodenBucketItem extends BucketItem {
 	 * Similar to {@link BucketItem#getEmptySuccessItem(ItemStack, Player)}.
 	 */
 	public static @NonNull ItemStack getEmptySuccessItem(
-		@NonNull ItemStack stack, @NonNull Player player
+		final @NonNull ItemStack stack, final @NonNull Player player
 	) {
 		return !player.hasInfiniteMaterials() ?
 			new ItemStack(ModItems.WOODEN_BUCKET_ITEM) : stack;
