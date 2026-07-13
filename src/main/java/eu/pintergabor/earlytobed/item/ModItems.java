@@ -11,7 +11,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.material.Fluids;
 
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 
 
 public final class ModItems {
@@ -42,11 +42,12 @@ public final class ModItems {
 				.durability(3)
 				.component(DataComponents.TOOL, ShearsItem.createToolProperties()));
 		// Item groups.
-		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(
-			entries -> {
-				entries.prepend(WOODEN_BUCKET_ITEM);
-				entries.prepend(WOODEN_WATER_BUCKET_ITEM);
-				entries.prepend(WOODEN_SHEARS_ITEM);
-			});
+		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+			.register(
+				entries -> {
+					entries.prepend(WOODEN_BUCKET_ITEM);
+					entries.prepend(WOODEN_WATER_BUCKET_ITEM);
+					entries.prepend(WOODEN_SHEARS_ITEM);
+				});
 	}
 }
