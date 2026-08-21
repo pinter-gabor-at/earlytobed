@@ -13,7 +13,9 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 
 public final class ModModelProvider extends FabricModelProvider {
 
-	public ModModelProvider(FabricPackOutput output) {
+	public ModModelProvider(
+		final @NonNull FabricPackOutput output
+	) {
 		super(output);
 	}
 
@@ -21,16 +23,20 @@ public final class ModModelProvider extends FabricModelProvider {
 	 * There are no blocks in this mod.
 	 */
 	@Override
-	public void generateBlockStateModels(@NonNull BlockModelGenerators blockStateModelGenerator) {
+	public void generateBlockStateModels(
+		final @NonNull BlockModelGenerators generators
+	) {
 	}
 
 	/**
 	 * Create item models.
 	 */
 	@Override
-	public void generateItemModels(@NonNull ItemModelGenerators itemModelGenerator) {
-		itemModelGenerator.generateFlatItem(ModItems.WOODEN_BUCKET_ITEM, FLAT_ITEM);
-		itemModelGenerator.generateFlatItem(ModItems.WOODEN_WATER_BUCKET_ITEM, FLAT_ITEM);
-		itemModelGenerator.generateFlatItem(ModItems.WOODEN_SHEARS_ITEM, FLAT_ITEM);
+	public void generateItemModels(
+		final @NonNull ItemModelGenerators generators
+	) {
+		generators.generateFlatItem(ModItems.WOODEN_BUCKET_ITEM, FLAT_ITEM);
+		generators.generateFlatItem(ModItems.WOODEN_WATER_BUCKET_ITEM, FLAT_ITEM);
+		generators.generateFlatItem(ModItems.WOODEN_SHEARS_ITEM, FLAT_ITEM);
 	}
 }

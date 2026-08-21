@@ -1,5 +1,7 @@
 package eu.pintergabor.earlytobed.item;
 
+import org.jspecify.annotations.NonNull;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -9,7 +11,10 @@ import net.minecraft.tags.ItemTags;
 
 public final class ModRecipeGenerator extends RecipeProvider {
 
-	 public ModRecipeGenerator(HolderLookup.Provider registries, RecipeOutput output) {
+	public ModRecipeGenerator(
+		final HolderLookup.@NonNull Provider registries,
+		final @NonNull RecipeOutput output
+	) {
 		super(registries, output);
 	}
 

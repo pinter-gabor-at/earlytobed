@@ -57,11 +57,11 @@ public final class ModItems {
 		// Create and register wooden buckets.
 		WOODEN_BUCKET_ITEM = registerItem(
 			"wooden_bucket",
-			settings -> new WoodenBucketItem(Fluids.EMPTY, settings),
+			props -> new WoodenBucketItem(Fluids.EMPTY, props),
 			new Item.Properties().stacksTo(16));
 		WOODEN_WATER_BUCKET_ITEM = registerItem(
 			"wooden_water_bucket",
-			settings -> new WoodenBucketItem(Fluids.WATER, settings),
+			props -> new WoodenBucketItem(Fluids.WATER, props),
 			new Item.Properties()
 				.craftRemainder(WOODEN_BUCKET_ITEM)
 				.stacksTo(1));

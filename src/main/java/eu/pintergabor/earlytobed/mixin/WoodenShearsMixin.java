@@ -20,7 +20,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 
 
 /**
- * Inject code into SheepEntity#interactMob.
+ * Inject code into SheepEntity#mobInteract.
  * <p>
  * The code is identical to the original one,
  * but checks for WOODEN_SHEARS_ITEM instead of SHEARS.
@@ -32,10 +32,12 @@ public abstract class WoodenShearsMixin {
 		method = "mobInteract",
 		cancellable = true)
 	private void mobInteract(
-		@NonNull Player player, @NonNull InteractionHand hand,
-		CallbackInfoReturnable<InteractionResult> cir) {
-		Sheep that = (Sheep) (Object) this;
-		ItemStack itemStack = player.getItemInHand(hand);
+		final @NonNull Player player,
+		final @NonNull InteractionHand hand,
+		final @NonNull CallbackInfoReturnable<InteractionResult> cir
+	) {
+		final Sheep that = (Sheep) (Object) this;
+		final ItemStack itemStack = player.getItemInHand(hand);
 		if (itemStack.is(WOODEN_SHEARS_ITEM)) {
 			if (that.level() instanceof ServerLevel serverLevel && that.readyForShearing()) {
 				that.shear(serverLevel, SoundSource.PLAYERS, itemStack);

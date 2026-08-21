@@ -52,27 +52,34 @@ public final class WoodenBucketItem extends BucketItem {
 	 * @return The usual {@link InteractionResult} of {@link #use(Level, Player, InteractionHand)}.
 	 */
 	private @NonNull InteractionResult fillEmptyBucket(
-		final @NonNull Level level, final @NonNull Player player,
-		final @NonNull ItemStack itemStack, final @NonNull BlockHitResult blockHitResult
+		final @NonNull Level level,
+		final @NonNull Player player,
+		final @NonNull ItemStack itemStack,
+		final @NonNull BlockHitResult blockHitResult
 	) {
+		// The clicked block.
 		final BlockPos blockHitPos = blockHitResult.getBlockPos();
 		final BlockState blockState = level.getBlockState(blockHitPos);
 		final Block block = blockState.getBlock();
+		// Check the clicked block.
 		if (block == Blocks.WATER) {
-			// Try to empty it
+			// If it is a water block.
+			// Try to fill the bucket.
 			final BucketPickup bucketPickup = (BucketPickup) block;
 			final ItemStack emptiedStack = bucketPickup.pickupBlock(player, level, blockHitPos, blockState);
-			// Normally it returns a WATER_BUCKET_ITEM
+			// Normally it returns a WATER_BUCKET_ITEM.
 			if (!emptiedStack.isEmpty()) {
-				// Change it to WOODEN_WATER_BUCKET_ITEM
+				// Change it to WOODEN_WATER_BUCKET_ITEM.
 				final ItemStack modEmptiedStack = new ItemStack(ModItems.WOODEN_WATER_BUCKET_ITEM);
+				// Continue the same way as in BucketItem.use.
 				player.awardStat(Stats.ITEM_USED.get(this));
 				bucketPickup.getPickupSound().ifPresent(
 					(sound) -> player.playSound(sound, 1F, 1F));
 				level.gameEvent(player, GameEvent.FLUID_PICKUP, blockHitPos);
-				final ItemStack filledStack = ItemUtils.createFilledResult(itemStack, player, modEmptiedStack);
-				if (!level.isClientSide()) {
-					CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, modEmptiedStack);
+				final ItemStack filledStack = ItemUtils.createFilledResult(
+					itemStack, player, modEmptiedStack);
+				if (player instanceof ServerPlayer serverPlayer) {
+					CriteriaTriggers.FILLED_BUCKET.trigger(serverPlayer, modEmptiedStack);
 				}
 				return InteractionResult.SUCCESS.heldItemTransformedTo(filledStack);
 			}
@@ -90,21 +97,31 @@ public final class WoodenBucketItem extends BucketItem {
 	 * @return The usual {@link InteractionResult} of {@link #use(Level, Player, InteractionHand)}.
 	 */
 	private @NonNull InteractionResult emptyBucket(
-		final @NonNull Level level, final @NonNull Player player,
-		final @NonNull ItemStack itemStack, final @NonNull BlockHitResult blockHitResult
+		final @NonNull Level level,
+		final @NonNull Player player,
+		final @NonNull ItemStack itemStack,
+		final @NonNull BlockHitResult blockHitResult
 	) {
-		BlockPos blockHitPos = blockHitResult.getBlockPos();
-		Direction direction = blockHitResult.getDirection();
-		BlockPos blockNextPos = blockHitPos.relative(direction);
-		BlockState blockState = level.getBlockState(blockHitPos);
-		BlockPos targetPos = (blockState.getBlock() instanceof LiquidBlockContainer) ? blockHitPos : blockNextPos;
+		// The clicked block.
+		final BlockPos blockHitPos = blockHitResult.getBlockPos();
+		final BlockState blockState = level.getBlockState(blockHitPos);
+		final Block block = blockState.getBlock();
+		// The block, or empty space, in front of the clicked block.
+		final Direction direction = blockHitResult.getDirection();
+		final BlockPos blockNextPos = blockHitPos.relative(direction);
+		// Act on this block.
+		final BlockPos targetPos = (block instanceof LiquidBlockContainer) ?
+			blockHitPos : blockNextPos;
+		// Try to empty the bucket.
 		if (emptyContents(player, level, targetPos, blockHitResult)) {
+			// If succeeded.
 			checkExtraContent(player, level, itemStack, targetPos);
-			if (player instanceof ServerPlayer) {
-				CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, targetPos, itemStack);
+			if (player instanceof ServerPlayer serverPlayer) {
+				CriteriaTriggers.PLACED_BLOCK.trigger(serverPlayer, targetPos, itemStack);
 			}
 			player.awardStat(Stats.ITEM_USED.get(this));
-			ItemStack emptiedStack = ItemUtils.createFilledResult(itemStack, player, getEmptySuccessItem(itemStack, player));
+			final ItemStack emptiedStack = ItemUtils.createFilledResult(
+				itemStack, player, getEmptySuccessItem(itemStack, player));
 			return InteractionResult.SUCCESS.heldItemTransformedTo(emptiedStack);
 		}
 		return InteractionResult.FAIL;
@@ -122,7 +139,8 @@ public final class WoodenBucketItem extends BucketItem {
 	 */
 	@Override
 	public @NonNull InteractionResult use(
-		final @NonNull Level level, final @NonNull Player player,
+		final @NonNull Level level,
+		final @NonNull Player player,
 		final @NonNull InteractionHand hand
 	) {
 		final ItemStack itemStack = player.getItemInHand(hand);
@@ -145,7 +163,8 @@ public final class WoodenBucketItem extends BucketItem {
 	 * Similar to {@link BucketItem#getEmptySuccessItem(ItemStack, Player)}.
 	 */
 	public static @NonNull ItemStack getEmptySuccessItem(
-		final @NonNull ItemStack stack, final @NonNull Player player
+		final @NonNull ItemStack stack,
+		final @NonNull Player player
 	) {
 		return !player.hasInfiniteMaterials() ?
 			new ItemStack(ModItems.WOODEN_BUCKET_ITEM) : stack;
